@@ -1,0 +1,83 @@
+{
+  "project_title": "Hyderabad_University_Casteism_Controversy_Reel",
+  "aspect_ratio": "9:16",
+  "total_duration_seconds": 32,
+  "fps": 30,
+  "resolution": "1080x1920",
+  "audio_settings": {
+    "language": "hi-IN",
+    "voice_tone": "serious, investigative, emphatic",
+    "background_music": {
+      "genre": "dark ambient suspense",
+      "bpm": 85,
+      "volume_level": 0.18
+    }
+  },
+  "scenes": [
+    {
+      "scene_id": 1,
+      "name": "Hook",
+      "duration_seconds": 4,
+      "ai_video_prompt": "Cinematic close-up of a serious Indian news presenter looking directly into the camera in a moody newsroom studio, high-contrast dramatic lighting, hyper-realistic, 4k",
+      "camera_motion": "slow push-in",
+      "voiceover": "प्रोफेसर ने छात्र को कहा — Dalit untouchable idiot...",
+      "on_screen_text": {
+        "text": "\"Dalit Untouchable Idiot\"?!",
+        "style": "bold red headline, centered, high-contrast sans-serif font"
+      },
+      "sfx": "subtle whoosh impact"
+    },
+    {
+      "scene_id": 2,
+      "name": "Incident Context & Email Reveal",
+      "duration_seconds": 8,
+      "ai_video_prompt": "Slow aerial cinematic pan of a sprawling Indian university campus gate and academic buildings under an overcast sky, shifting to an authentic computer screen showing an open formal email interface with highlighted text, photorealistic",
+      "camera_motion": "drone descending pan down to computer screen zoom",
+      "voiceover": "मामला हैदराबाद यूनिवर्सिटी का है। आरोप है कि इतिहास विभाग के प्रोफेसर डॉ. विजय रामदास मंडला ने ईमेल में पूर्व छात्र सुबोध कुमार को ये कहा...",
+      "on_screen_text": {
+        "text": "UoH: प्रो. विजय रामदास मंडला\nशिकायतकर्ता: सुबोध कुमार",
+        "style": "lower-third graphic banner with yellow highlight box"
+      },
+      "sfx": "ambient university campus tone transitioning to digital typing click"
+    },
+    {
+      "scene_id": 3,
+      "name": "Regional Slur Allegation",
+      "duration_seconds": 7,
+      "ai_video_prompt": "Macro shot of a digital email document with a glowing red highlight box emphasizing harsh typed words, subtle glowing embers effect in background, realistic UI display",
+      "camera_motion": "subtle lateral tracking right",
+      "voiceover": "और बिहार-झारखंड के छात्रों को 'third-rate, poverty-ridden idiots' कहा।",
+      "on_screen_text": {
+        "text": "\"Third-rate, poverty-ridden idiots\"",
+        "style": "red-bordered callout bubble with pop-in animation"
+      },
+      "sfx": "subtle bass drop"
+    },
+    {
+      "scene_id": 4,
+      "name": "Department Action vs Student Demand",
+      "duration_seconds": 8,
+      "ai_video_prompt": "Split screen or montage: an empty departmental office desk with official paper files, cross-cutting to symbolic silhouettes of students gathered under an open sky near a university memorial, atmospheric mist, serious tone",
+      "camera_motion": "slow dolly forward",
+      "voiceover": "विभाग ने कहा — माफी माँग ली, मामला खत्म। लेकिन छात्र ने कहा — माफी से नहीं, जांच से होगा इंसाफ। सवाल ये है कि जिस यूनिवर्सिटी में रोहित वेमुला जैसा मामला हो चुका हो, वहाँ आज भी ऐसी सोच कैसे?",
+      "on_screen_text": {
+        "text": "सिर्फ माफी या निष्पक्ष जांच?",
+        "style": "bold white subtitle text with black outline"
+      },
+      "sfx": "low resonant drum hit"
+    },
+    {
+      "scene_id": 5,
+      "name": "Call to Action",
+      "duration_seconds": 5,
+      "ai_video_prompt": "Medium portrait shot of the Indian presenter speaking candidly with an open palm gesture, warm studio rim lighting, neutral dark backdrop, authentic expression",
+      "camera_motion": "static centered framed shot",
+      "voiceover": "आपको क्या लगता है — सिर्फ माफी काफी है या कार्रवाई होनी चाहिए? कमेंट में बताओ।",
+      "on_screen_text": {
+        "text": "आपकी क्या राय है? 👇 कमेंट करें",
+        "style": "animated bottom banner with glowing border"
+      },
+      "sfx": "gentle audio fade out"
+    }
+  ]
+}

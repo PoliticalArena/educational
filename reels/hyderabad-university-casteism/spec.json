@@ -1,0 +1,125 @@
+{
+  "project_title": "Hyderabad_University_Casteism_Controversy_Reel",
+  "version": 2,
+  "changelog": [
+    "Voiceovers tightened to fit scene durations (v1 ran ~40s of VO in a 32s timeline).",
+    "Hook and lower-thirds reframed as allegations (आरोप) — the reel names a real person.",
+    "AI prompts no longer generate a fake 'authentic' email; use the sourced screenshot or a generic blurred UI.",
+    "Added per-scene start/end timestamps, an AI-content disclosure flag and a source-verification checklist."
+  ],
+  "aspect_ratio": "9:16",
+  "total_duration_seconds": 32,
+  "fps": 30,
+  "resolution": "1080x1920",
+  "safe_zone": {
+    "top_px": 220,
+    "bottom_px": 380,
+    "note": "Keep text out of the Reels/Shorts UI overlay zones."
+  },
+  "audio_settings": {
+    "language": "hi-IN",
+    "voice_tone": "serious, investigative, emphatic",
+    "target_pace_words_per_second": 2.8,
+    "background_music": {
+      "genre": "dark ambient suspense",
+      "bpm": 85,
+      "volume_level": 0.18,
+      "duck_under_voice_db": -8
+    }
+  },
+  "compliance": {
+    "ai_generated_presenter": true,
+    "platform_ai_label_required": true,
+    "framing": "allegation — do not state as established fact",
+    "verify_before_publish": [
+      "Primary source for the email text (screenshot / complaint copy / credible outlet report).",
+      "Exact wording of both quoted phrases matches the source.",
+      "Name and designation of the professor and the complainant.",
+      "Department's reported response ('apology given, matter closed') is attributable to a source.",
+      "Whether the professor has responded publicly — add one line if so (fairness)."
+    ]
+  },
+  "scenes": [
+    {
+      "scene_id": 1,
+      "name": "Hook",
+      "start_seconds": 0,
+      "end_seconds": 4,
+      "duration_seconds": 4,
+      "ai_video_prompt": "Cinematic close-up of a serious Indian news presenter looking directly into the camera in a moody newsroom studio, high-contrast dramatic lighting, hyper-realistic, 4k",
+      "camera_motion": "slow push-in",
+      "voiceover": "आरोप — प्रोफेसर ने छात्र को लिखा: Dalit untouchable idiot!",
+      "on_screen_text": {
+        "text": "\"Dalit Untouchable Idiot\"?!",
+        "subtext": "आरोप",
+        "style": "bold red headline, centered, high-contrast sans-serif; small white 'आरोप' tag above headline"
+      },
+      "sfx": "subtle whoosh impact on frame 1",
+      "pacing_note": "Text on screen from frame 0 — no fade-in. Cut on the word 'idiot'."
+    },
+    {
+      "scene_id": 2,
+      "name": "Incident Context & Email Reveal",
+      "start_seconds": 4,
+      "end_seconds": 12,
+      "duration_seconds": 8,
+      "ai_video_prompt": "Slow aerial cinematic pan of a sprawling Indian university campus gate and academic buildings under an overcast sky, ending on a generic laptop screen with a blurred, unbranded email interface, photorealistic",
+      "broll_note": "If you have the sourced email screenshot, composite it on the laptop screen instead of AI text. Never AI-generate the email body.",
+      "camera_motion": "drone descending pan down to computer screen zoom",
+      "voiceover": "हैदराबाद यूनिवर्सिटी। आरोप है कि इतिहास विभाग के प्रोफेसर विजय रामदास मंडला ने पूर्व छात्र सुबोध कुमार को ईमेल में ये लिखा।",
+      "on_screen_text": {
+        "text": "आरोपी: प्रो. विजय रामदास मंडला (इतिहास विभाग, UoH)\nशिकायतकर्ता: सुबोध कुमार (पूर्व छात्र)",
+        "style": "lower-third graphic banner with yellow highlight box"
+      },
+      "sfx": "ambient campus tone transitioning to digital typing click"
+    },
+    {
+      "scene_id": 3,
+      "name": "Regional Slur Allegation",
+      "start_seconds": 12,
+      "end_seconds": 19,
+      "duration_seconds": 7,
+      "ai_video_prompt": "Macro shot of a blurred digital document with a glowing red highlight box, subtle glowing embers effect in background, realistic UI display, no legible text",
+      "broll_note": "Overlay the quoted phrase as a motion-graphic callout in post, not as AI-rendered text.",
+      "camera_motion": "subtle lateral tracking right",
+      "voiceover": "ईमेल में बिहार-झारखंड के छात्रों को भी कहा गया — third-rate, poverty-ridden idiots.",
+      "on_screen_text": {
+        "text": "\"Third-rate, poverty-ridden idiots\"",
+        "style": "red-bordered callout bubble with pop-in animation"
+      },
+      "sfx": "subtle bass drop on 'idiots'"
+    },
+    {
+      "scene_id": 4,
+      "name": "Department Action vs Student Demand",
+      "start_seconds": 19,
+      "end_seconds": 27,
+      "duration_seconds": 8,
+      "ai_video_prompt": "Split screen: left, an empty departmental office desk with official paper files; right, symbolic silhouettes of students gathered under an open sky on a university campus, atmospheric mist, serious tone",
+      "camera_motion": "slow dolly forward",
+      "voiceover": "विभाग: माफी माँग ली, मामला खत्म। छात्र: माफी नहीं, जांच चाहिए। रोहित वेमुला वाली यूनिवर्सिटी में आज भी ये सोच?",
+      "on_screen_text": {
+        "text": "सिर्फ माफी या निष्पक्ष जांच?",
+        "style": "bold white subtitle text with black outline"
+      },
+      "sfx": "low resonant drum hit on 'रोहित वेमुला'",
+      "pacing_note": "Hard cut left→right panel on 'छात्र'."
+    },
+    {
+      "scene_id": 5,
+      "name": "Call to Action",
+      "start_seconds": 27,
+      "end_seconds": 32,
+      "duration_seconds": 5,
+      "ai_video_prompt": "Medium portrait shot of the Indian presenter speaking candidly with an open palm gesture, warm studio rim lighting, neutral dark backdrop, authentic expression",
+      "camera_motion": "static centered framed shot",
+      "voiceover": "सिर्फ माफी काफी है, या कार्रवाई होनी चाहिए? कमेंट में बताओ।",
+      "on_screen_text": {
+        "text": "आपकी क्या राय है? 👇 कमेंट करें",
+        "style": "animated bottom banner with glowing border (inside safe zone)"
+      },
+      "sfx": "gentle audio fade out",
+      "pacing_note": "Last frame should loop cleanly into scene 1 for replay retention."
+    }
+  ]
+}
