@@ -55,3 +55,19 @@ python3 tools/guide_track.py reels/hyderabad-university-casteism/spec.json \
 
 ElevenLabs flow with the finished scene 5 takes (voice: Maahir – Crime News Narrator):
 https://elevenlabs.io/app/flows/abUpYmfJEdzC3uIpBKzX
+
+## Video (rendered locally, no paid tools)
+
+`output/uoh_reel_v1_guide-voice.mp4` is the finished 1080×1920, 30fps, 32s reel: motion graphics, burned-in Hindi captions, a generated dark-ambient bed (85 BPM pulse, ducked under the voice) and SFX on the spec's cues, loudness-normalised to -14 LUFS. **The voice is the robotic guide track.** To swap in a real voice, replace `audio/guide_track.mp3` and rebuild:
+
+```bash
+SLUG=reels/hyderabad-university-casteism
+node tools/render_reel.js $SLUG/video/composition.html /tmp/silent.mp4 32 30
+tools/sound_design.sh $SLUG/audio/guide_track.mp3 /tmp/mix.m4a     # or your new VO
+ffmpeg -y -i /tmp/silent.mp4 -i /tmp/mix.m4a -map 0:v -map 1:a -c:v copy \
+  -af loudnorm=I=-14:TP=-1.5:LRA=11 -c:a aac -b:a 192k -movflags +faststart -shortest \
+  $SLUG/output/uoh_reel_v1_guide-voice.mp4
+```
+
+Preview any moment as a still: `node tools/render_reel.js $SLUG/video/composition.html --stills /tmp/stills 1.5 16 25.8`.
+If a new voiceover's lines run at different lengths, update `SCENES[].spoken` in `composition.html` so the captions stay in sync.

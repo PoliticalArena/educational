@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>UoH Reel Composition</title>
+<style>
+  :root {
+    --red: #ff2b3a;
+    --red-deep: #8a0a14;
+    --yellow: #ffd23f;
+    --ink: #0a0b10;
+    --white: #f6f4ef;
+    --muted: #a7a9b4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); }
+  body { font-family: "Noto Sans", "Noto Sans Devanagari", "Noto Color Emoji", sans-serif; color: var(--white); }
+  .layer { position: absolute; inset: 0; will-change: transform, opacity; }
+  #stage { position: absolute; inset: 0; overflow: hidden; }
+
+  /* ---------- global chrome ---------- */
+  #bg { background: radial-gradient(120% 80% at 50% 35%, #1b0a10 0%, #07070b 70%); }
+  #vignette { background: radial-gradient(90% 70% at 50% 45%, transparent 55%, rgba(0,0,0,.85) 100%); pointer-events: none; }
+  #grain { opacity: .07; background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.5) 0 1px, transparent 1px 3px); mix-blend-mode: overlay; }
+  #topbar { position: absolute; left: 60px; right: 60px; top: 230px; height: 70px; display: flex; align-items: center; gap: 18px; }
+  .pill { background: var(--red); color: #fff; font-weight: 700; font-size: 32px; padding: 8px 22px; border-radius: 8px; letter-spacing: .5px; }
+  .pill .dot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; background: #fff; margin-right: 10px; vertical-align: middle; }
+  #topbar .title { font-size: 34px; font-weight: 700; color: var(--white); text-shadow: 0 2px 8px #000; }
+  #disclaimer { position: absolute; left: 60px; top: 312px; font-size: 26px; color: var(--muted); }
+  #progress { position: absolute; left: 0; top: 0; height: 8px; background: var(--red); }
+
+  /* ---------- scene 1 ---------- */
+  #s1 { display: flex; flex-direction: column; align-items: center; justify-content: center; padding-bottom: 260px; }
+  #s1 .tag { background: var(--white); color: var(--ink); font-weight: 700; font-size: 48px; padding: 6px 28px; border-radius: 6px; margin-bottom: 40px; }
+  #s1 .headline { text-align: center; font-weight: 700; font-size: 118px; line-height: 1.05; color: var(--red); text-transform: uppercase; letter-spacing: -2px;
+                  text-shadow: 0 0 40px rgba(255,43,58,.45), 0 6px 0 #3a0006; }
+  #s1 .ghost { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-bottom: 260px; pointer-events: none; }
+  #s1 .ghost .headline { color: #00e5ff; text-shadow: none; mix-blend-mode: screen; opacity: .55; }
+  #s1 .ghost .tag { visibility: hidden; }
+
+  /* ---------- scene 2 ---------- */
+  #campus { background: linear-gradient(#2a3140 0%, #4a5262 45%, #1a1d25 100%); }
+  #campus svg { position: absolute; left: -10%; width: 120%; bottom: 0; }
+  #clouds { background: radial-gradient(60% 18% at 30% 18%, rgba(200,205,215,.25), transparent 70%),
+                        radial-gradient(50% 15% at 75% 26%, rgba(200,205,215,.18), transparent 70%); }
+  #mail { display: flex; align-items: center; justify-content: center; }
+  .window { width: 860px; background: #f2f3f5; border-radius: 22px; box-shadow: 0 40px 120px rgba(0,0,0,.7); overflow: hidden; color: #1d2230; }
+  .window .chrome { height: 64px; background: #dfe2e8; display: flex; align-items: center; gap: 14px; padding: 0 26px; }
+  .window .chrome i { width: 18px; height: 18px; border-radius: 50%; display: block; }
+  .window .body { padding: 40px 48px 56px; }
+  .window .meta { font-size: 30px; color: #5b6272; margin-bottom: 10px; }
+  .window .meta b { color: #1d2230; }
+  .window .subject { font-size: 40px; font-weight: 700; margin: 18px 0 34px; }
+  .bar { height: 22px; border-radius: 11px; background: #c9cdd6; margin: 22px 0; filter: blur(2px); }
+  #lower3 { position: absolute; left: 60px; right: 60px; top: 1040px; }
+  #lower3 .row { display: flex; align-items: stretch; margin-bottom: 16px; }
+  #lower3 .k { background: var(--yellow); color: var(--ink); font-weight: 700; font-size: 34px; padding: 14px 22px; display: flex; align-items: center; }
+  #lower3 .v { background: rgba(10,11,16,.92); font-size: 38px; font-weight: 700; padding: 14px 26px; border-left: 6px solid var(--yellow); }
+  #lower3 .v small { display: block; font-size: 26px; color: var(--muted); font-weight: 400; }
+
+  /* ---------- scene 3 ---------- */
+  #doc { background: radial-gradient(100% 70% at 50% 40%, #2a0c10, #08080c 75%); }
+  #doc .sheet { position: absolute; left: 90px; top: 430px; width: 1100px; height: 900px; background: #ecedf0; border-radius: 18px; padding: 70px 80px;
+                box-shadow: 0 30px 120px rgba(0,0,0,.8); transform-origin: 0 0; }
+  #doc .sheet .bar { background: #b8bcc6; height: 30px; margin: 34px 0; }
+  #hl { position: absolute; border: 7px solid var(--red); border-radius: 12px; box-shadow: 0 0 40px rgba(255,43,58,.8), inset 0 0 30px rgba(255,43,58,.35); }
+  #embers canvas { position: absolute; inset: 0; }
+  #callout { position: absolute; left: 70px; right: 70px; top: 760px; background: #15070a; border: 6px solid var(--red); border-radius: 28px; padding: 46px 48px;
+             box-shadow: 0 0 60px rgba(255,43,58,.55); text-align: center; transform-origin: 50% 100%; }
+  #callout .q { font-size: 84px; font-weight: 700; line-height: 1.1; color: #fff; }
+  #callout .src { font-size: 30px; color: var(--muted); margin-top: 22px; }
+  #callout:after { content: ""; position: absolute; left: 50%; bottom: -46px; margin-left: -30px; border: 30px solid transparent; border-top: 18px solid var(--red); }
+
+  /* ---------- scene 4 ---------- */
+  .panel { position: absolute; top: 400px; height: 820px; width: 470px; border-radius: 26px; padding: 44px 36px; display: flex; flex-direction: column; gap: 30px; overflow: hidden; }
+  #pl { left: 50px; background: linear-gradient(160deg, #1f2533, #11141c); border: 3px solid #3b4357; }
+  #pr { right: 50px; background: linear-gradient(160deg, #3a0b12, #160509); border: 3px solid var(--red); }
+  .panel .who { font-size: 64px; font-weight: 700; }
+  #pl .who { color: #c9d3ea; }
+  #pr .who { color: var(--red); }
+  .panel .say { font-size: 54px; font-weight: 700; line-height: 1.25; }
+  .files { position: relative; height: 230px; margin-top: auto; }
+  .files i { position: absolute; left: 30px; width: 300px; height: 190px; background: #e9e4d6; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,.6); display: block; }
+  .crowd { position: relative; height: 260px; margin-top: auto; }
+  .crowd i { position: absolute; bottom: 0; background: #050203; border-radius: 50% 50% 8px 8px / 30% 30% 8px 8px; display: block; }
+  .crowd b { position: absolute; background: #050203; border-radius: 50%; display: block; }
+  #vs { position: absolute; left: 50%; top: 780px; width: 120px; height: 120px; margin-left: -60px; border-radius: 50%; background: var(--white); color: var(--ink);
+        font-weight: 700; font-size: 48px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 10px rgba(0,0,0,.6); }
+  #q4 { position: absolute; left: 60px; right: 60px; top: 520px; text-align: center; font-size: 92px; font-weight: 700; line-height: 1.2; text-shadow: 0 6px 30px #000; }
+  #q4 em { font-style: normal; color: var(--yellow); }
+  #ask4 { position: absolute; left: 40px; right: 40px; top: 1180px; text-align: center; font-size: 76px; font-weight: 700; color: #fff;
+          -webkit-text-stroke: 10px #000; paint-order: stroke fill; }
+
+  /* ---------- scene 5 ---------- */
+  #s5h { position: absolute; left: 60px; right: 60px; top: 470px; text-align: center; font-size: 110px; font-weight: 700; line-height: 1.15; }
+  .opt { position: absolute; left: 90px; right: 90px; height: 150px; border-radius: 24px; display: flex; align-items: center; gap: 30px; padding: 0 40px; font-size: 60px; font-weight: 700; }
+  .opt span { width: 92px; height: 92px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 50px; flex: none; }
+  #oA { top: 790px; background: #1c2130; border: 3px solid #3b4357; }
+  #oA span { background: #3b4357; }
+  #oB { top: 980px; background: #2b0a10; border: 3px solid var(--red); }
+  #oB span { background: var(--red); }
+  #banner { position: absolute; left: 70px; right: 70px; top: 1190px; height: 140px; border-radius: 70px; background: var(--white); color: var(--ink);
+            display: flex; align-items: center; justify-content: center; font-size: 62px; font-weight: 700; }
+
+  /* ---------- captions ---------- */
+  #cap { position: absolute; left: 50px; right: 50px; top: 1395px; height: 150px; display: flex; align-items: center; justify-content: center; text-align: center; }
+  #cap span { font-size: 54px; font-weight: 700; line-height: 1.25; color: #fff; background: rgba(0,0,0,.72); padding: 10px 24px; border-radius: 14px;
+              box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  #cap span em { font-style: normal; color: var(--yellow); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="bg" class="layer"></div>
+
+  <!-- scene 2: campus -->
+  <div id="campus" class="layer">
+    <div id="clouds" class="layer"></div>
+    <svg viewBox="0 0 1300 1100" preserveAspectRatio="xMidYMax slice" height="1700">
+      <g fill="#0e1118">
+        <rect x="0" y="560" width="1300" height="540"/>
+        <rect x="40" y="380" width="210" height="300"/>
+        <rect x="270" y="300" width="160" height="380"/>
+        <rect x="860" y="330" width="190" height="350"/>
+        <rect x="1070" y="410" width="200" height="270"/>
+        <polygon points="270,300 350,240 430,300"/>
+        <!-- gate -->
+        <rect x="470" y="420" width="70" height="420"/>
+        <rect x="760" y="420" width="70" height="420"/>
+        <path d="M470 470 Q650 300 830 470 L830 520 Q650 360 470 520 Z"/>
+        <rect x="455" y="400" width="100" height="30"/>
+        <rect x="745" y="400" width="100" height="30"/>
+      </g>
+      <g fill="#ffd27a" opacity=".55">
+        <rect x="70" y="420" width="30" height="40"/><rect x="130" y="420" width="30" height="40"/><rect x="190" y="480" width="30" height="40"/>
+        <rect x="300" y="360" width="26" height="36"/><rect x="370" y="440" width="26" height="36"/>
+        <rect x="890" y="380" width="30" height="40"/><rect x="980" y="460" width="30" height="40"/>
+        <rect x="1100" y="450" width="30" height="40"/><rect x="1200" y="510" width="30" height="40"/>
+      </g>
+      <text x="650" y="455" text-anchor="middle" font-size="34" font-weight="700" fill="#cfd5e3" font-family="Noto Sans">UNIVERSITY</text>
+    </svg>
+  </div>
+
+  <div id="mail" class="layer">
+    <div class="window">
+      <div class="chrome"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div>
+      <div class="body">
+        <div class="meta">From: <b>●●●●●●●●</b></div>
+        <div class="meta">To: <b>●●●●●●</b></div>
+        <div class="subject">Re: ●●●●●●●●●●</div>
+        <div class="bar" style="width:92%"></div>
+        <div class="bar" style="width:78%"></div>
+        <div class="bar" style="width:86%"></div>
+        <div class="bar" style="width:64%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- scene 3: document -->
+  <div id="doc" class="layer">
+    <div class="sheet">
+      <div class="bar" style="width:70%"></div>
+      <div class="bar" style="width:88%"></div>
+      <div class="bar" style="width:80%"></div>
+      <div class="bar" id="hlRow" style="width:84%"></div>
+      <div class="bar" style="width:60%"></div>
+      <div class="bar" style="width:76%"></div>
+      <div class="bar" style="width:90%"></div>
+      <div class="bar" style="width:50%"></div>
+    </div>
+    <div id="hl"></div>
+    <div id="embers" class="layer"><canvas id="emberCanvas" width="1080" height="1920"></canvas></div>
+    <div id="callout">
+      <div class="q">“Third-rate,<br>poverty-ridden<br>idiots”</div>
+      <div class="src">कथित ईमेल से — बिहार-झारखंड के छात्रों पर</div>
+    </div>
+  </div>
+
+  <!-- scene 4: split -->
+  <div id="s4" class="layer">
+    <div id="pl" class="panel">
+      <div class="who">विभाग</div>
+      <div class="say">“माफी माँग ली,<br>मामला खत्म”</div>
+      <div class="files"><i style="top:40px;transform:rotate(-6deg)"></i><i style="top:20px;transform:rotate(3deg)"></i><i style="top:0"></i></div>
+    </div>
+    <div id="pr" class="panel">
+      <div class="who">छात्र</div>
+      <div class="say">“माफी नहीं,<br>जांच चाहिए”</div>
+      <div class="crowd" id="crowd"></div>
+    </div>
+    <div id="vs">VS</div>
+    <div id="q4">रोहित वेमुला वाली<br>यूनिवर्सिटी में<br><em>आज भी ये सोच?</em></div>
+    <div id="ask4">सिर्फ माफी या<br>निष्पक्ष जांच?</div>
+  </div>
+
+  <!-- scene 1: hook -->
+  <div id="s1" class="layer">
+    <div class="tag">आरोप</div>
+    <div class="headline">“Dalit<br>Untouchable<br>Idiot”?!</div>
+    <div class="ghost" id="s1ghost"><div class="tag">आरोप</div><div class="headline">“Dalit<br>Untouchable<br>Idiot”?!</div></div>
+  </div>
+
+  <!-- scene 5: CTA -->
+  <div id="s5" class="layer">
+    <div id="s5h">आपकी क्या<br>राय है?</div>
+    <div id="oA" class="opt"><span>A</span>सिर्फ माफी काफी</div>
+    <div id="oB" class="opt"><span>B</span>कार्रवाई ज़रूरी</div>
+    <div id="banner">👇 कमेंट करें</div>
+  </div>
+
+  <div id="lower3">
+    <div class="row"><div class="k">आरोपी</div><div class="v">प्रो. विजय रामदास मंडला<small>इतिहास विभाग, हैदराबाद यूनिवर्सिटी</small></div></div>
+    <div class="row"><div class="k">शिकायत</div><div class="v">सुबोध कुमार<small>पूर्व छात्र</small></div></div>
+  </div>
+
+  <div id="cap"><span id="capText"></span></div>
+
+  <div id="topbar"><div class="pill"><span class="dot"></span>ब्रेकिंग</div><div class="title">हैदराबाद यूनिवर्सिटी विवाद</div></div>
+  <div id="disclaimer">* आरोप — जांच लंबित</div>
+  <div id="vignette" class="layer"></div>
+  <div id="grain" class="layer"></div>
+  <div id="progress"></div>
+</div>
+
+<script>
+const TOTAL = 32;
+const $ = (id) => document.getElementById(id);
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const lerp = (a, b, k) => a + (b - a) * k;
+const easeOut = (k) => 1 - Math.pow(1 - k, 3);
+const easeInOut = (k) => (k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
+const backOut = (k) => { const c = 1.70158; return 1 + (c + 1) * Math.pow(k - 1, 3) + c * Math.pow(k - 1, 2); };
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+// visible window [a, b) with fade length f
+const win = (t, a, b, f = .25) => Math.min(prog(t, a, a + f), 1 - prog(t, b - f, b));
+
+// deterministic PRNG
+function rng(seed) { return () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }; }
+
+// ---------- captions: chunks timed proportionally inside each scene's spoken span ----------
+const SCENES = [
+  { start: 0,  spoken: 3.6, chunks: ["आरोप — प्रोफेसर ने छात्र को लिखा:", "<em>Dalit untouchable idiot!</em>"] },
+  { start: 4,  spoken: 7.3, chunks: ["हैदराबाद यूनिवर्सिटी।", "आरोप है कि इतिहास विभाग के", "प्रोफेसर विजय रामदास मंडला ने", "पूर्व छात्र सुबोध कुमार को", "ईमेल में ये लिखा।"] },
+  { start: 12, spoken: 5.9, chunks: ["ईमेल में बिहार-झारखंड के", "छात्रों को भी कहा गया —", "<em>third-rate, poverty-ridden idiots.</em>"] },
+  { start: 19, spoken: 7.5, chunks: ["विभाग: माफी माँग ली, मामला खत्म।", "छात्र: माफी नहीं, जांच चाहिए।", "रोहित वेमुला वाली यूनिवर्सिटी में", "<em>आज भी ये सोच?</em>"] },
+  { start: 27, spoken: 4.4, chunks: ["सिर्फ माफी काफी है,", "या कार्रवाई होनी चाहिए?", "<em>कमेंट में बताओ।</em>"] },
+];
+const CUES = [];
+for (const s of SCENES) {
+  const lens = s.chunks.map((c) => c.replace(/<[^>]+>/g, "").length);
+  const sum = lens.reduce((a, b) => a + b, 0);
+  let cur = s.start;
+  s.chunks.forEach((c, i) => { const d = s.spoken * lens[i] / sum; CUES.push({ a: cur, b: cur + d + (i === s.chunks.length - 1 ? .35 : 0), html: c }); cur += d; });
+}
+
+// ---------- crowd silhouettes ----------
+(() => {
+  const r = rng(7), crowd = $("crowd");
+  for (let i = 0; i < 9; i++) {
+    const x = 10 + i * 46 + r() * 14, h = 120 + r() * 70, w = 60 + r() * 18;
+    const body = document.createElement("i"); body.style.cssText = `left:${x}px;width:${w}px;height:${h}px`;
+    const head = document.createElement("b"); const hs = 40 + r() * 10; head.style.cssText = `left:${x + w / 2 - hs / 2}px;bottom:${h - 6}px;width:${hs}px;height:${hs}px`;
+    crowd.append(body, head);
+  }
+})();
+
+// ---------- embers ----------
+const EMBERS = (() => { const r = rng(42); return Array.from({ length: 70 }, () => ({ x: r() * 1080, y: r() * 1920, s: 2 + r() * 5, v: 60 + r() * 140, ph: r() * 6.28 })); })();
+function drawEmbers(t, alpha) {
+  const c = $("emberCanvas"), g = c.getContext("2d");
+  g.clearRect(0, 0, 1080, 1920);
+  if (alpha <= 0) return;
+  for (const e of EMBERS) {
+    const y = ((e.y - e.v * t) % 1920 + 1920) % 1920, x = e.x + Math.sin(t * 1.3 + e.ph) * 30;
+    const a = alpha * (.35 + .65 * Math.abs(Math.sin(t * 2 + e.ph)));
+    g.fillStyle = `rgba(255,${90 + Math.floor(e.s * 18)},40,${a})`;
+    g.beginPath(); g.arc(x, y, e.s, 0, 6.283); g.fill();
+  }
+}
+
+function setO(id, o) { const el = $(id); el.style.opacity = o; el.style.visibility = o <= 0.001 ? "hidden" : "visible"; }
+
+function render(t) {
+  // ---- background tint per scene ----
+  const redBg = t < 4 || (t >= 12 && t < 19);
+  $("bg").style.background = redBg
+    ? "radial-gradient(120% 80% at 50% 35%, #2a0a12 0%, #07070b 70%)"
+    : "radial-gradient(120% 80% at 50% 35%, #121726 0%, #07070b 70%)";
+
+  // ---- scene 1: hook (0–4) ----
+  const s1 = 1 - prog(t, 3.8, 4.0);
+  setO("s1", t < 4 ? s1 : 0);
+  if (t < 4) {
+    const k = prog(t, 0, .35);
+    const scale = lerp(1.18, 1, easeOut(k)) * (1 + t * 0.012);          // slam + slow push-in
+    const shake = t < .45 ? Math.sin(t * 90) * 14 * (1 - k) : 0;
+    $("s1").style.transform = `translate(${shake}px, ${-shake * .5}px) scale(${scale})`;
+    const glitch = (t > .05 && t < .3) || (t > 2.4 && t < 2.52) || (t > 3.35 && t < 3.42);
+    $("s1ghost").style.transform = `translate(${glitch ? 12 : 0}px, ${glitch ? -6 : 0}px)`;
+    $("s1ghost").style.opacity = glitch ? 1 : 0;
+  }
+
+  // ---- scene 2: campus → email (4–12) ----
+  const campusO = win(t, 4, 8.9, .3);
+  setO("campus", campusO);
+  if (campusO > 0) {
+    const k = easeInOut(prog(t, 4, 8.9));
+    $("campus").style.transform = `scale(${lerp(1.35, 1.05, k)}) translateY(${lerp(-160, 40, k)}px)`;
+    $("clouds").style.transform = `translateX(${lerp(0, -80, k)}px)`;
+  }
+  const mailO = win(t, 8.5, 12.05, .35);
+  setO("mail", mailO);
+  if (mailO > 0) {
+    const k = easeOut(prog(t, 8.5, 12));
+    $("mail").style.transform = `translateY(${lerp(120, -120, k)}px) scale(${lerp(.85, 1.12, k)})`;
+  }
+  const l3 = win(t, 4.7, 11.9, .3);
+  setO("lower3", l3);
+  $("lower3").style.transform = `translateX(${lerp(-80, 0, easeOut(prog(t, 4.7, 5.2)))}px)`;
+  $("lower3").querySelectorAll(".row")[1].style.opacity = prog(t, 5.6, 5.9);
+
+  // ---- scene 3: document + callout (12–19) ----
+  const docO = win(t, 12, 19.05, .3);
+  setO("doc", docO);
+  if (docO > 0) {
+    const k = prog(t, 12, 19);
+    $("doc").querySelector(".sheet").style.transform = `translateX(${lerp(-40, -240, k)}px) rotate(-4deg) scale(1.08)`;
+    // highlight box follows the target row
+    const row = $("hlRow").getBoundingClientRect();
+    const draw = easeOut(prog(t, 13.2, 14.0));
+    const hl = $("hl");
+    hl.style.left = (row.left - 20) + "px"; hl.style.top = (row.top - 22) + "px";
+    hl.style.width = Math.max(0, (row.width + 40) * draw) + "px"; hl.style.height = (row.height + 44) + "px";
+    hl.style.opacity = draw > 0 ? 1 : 0;
+    drawEmbers(t - 12, docO);
+    const c = prog(t, 14.6, 15.1);
+    const callout = $("callout");
+    callout.style.opacity = c;
+    callout.style.transform = `scale(${c > 0 ? backOut(c) : 0})`;
+    // pulse on "idiots"
+    const pulse = t > 17.1 && t < 17.5 ? 1 + Math.sin((t - 17.1) / .4 * Math.PI) * .05 : 1;
+    if (c >= 1) callout.style.transform = `scale(${pulse})`;
+  } else drawEmbers(0, 0);
+
+  // ---- scene 4: split (19–27) ----
+  const s4 = win(t, 19, 27.05, .25);
+  setO("s4", s4);
+  if (s4 > 0) {
+    const dolly = 1 + prog(t, 19, 27) * .06;
+    $("s4").style.transform = `scale(${dolly})`;
+    const pl = easeOut(prog(t, 19, 19.45)), pr = easeOut(prog(t, 21.2, 21.6));
+    const dim = 1 - .9 * prog(t, 23.3, 23.7);
+    $("pl").style.transform = `translateX(${lerp(-560, 0, pl)}px)`; $("pl").style.opacity = dim;
+    $("pr").style.transform = `translateX(${lerp(560, 0, pr)}px)`; $("pr").style.opacity = dim * (pr > 0 ? 1 : 0);
+    const vs = prog(t, 21.5, 21.8);
+    $("vs").style.opacity = vs * dim; $("vs").style.transform = `scale(${vs > 0 ? backOut(vs) : 0})`;
+    const q = prog(t, 23.4, 23.8);
+    $("q4").style.opacity = q; $("q4").style.transform = `translateY(${lerp(40, 0, easeOut(q))}px) scale(${1 + Math.max(0, .06 - (t - 23.4) * .3)})`;
+    const a4 = prog(t, 25, 25.3);
+    $("ask4").style.opacity = a4; $("ask4").style.transform = `scale(${a4 > 0 ? backOut(a4) : 0})`;
+  }
+
+  // ---- scene 5: CTA (27–32) ----
+  const s5 = prog(t, 27, 27.25);
+  setO("s5", t >= 27 ? s5 : 0);
+  if (t >= 27) {
+    $("s5h").style.transform = `translateY(${lerp(40, 0, easeOut(prog(t, 27, 27.4)))}px)`;
+    const a = prog(t, 27.4, 27.8), b = prog(t, 28.6, 29.0);
+    $("oA").style.opacity = a; $("oA").style.transform = `translateX(${lerp(-200, 0, easeOut(a))}px)`;
+    $("oB").style.opacity = b; $("oB").style.transform = `translateX(${lerp(200, 0, easeOut(b))}px)`;
+    const bn = prog(t, 30.0, 30.35);
+    const glow = 20 + 25 * (0.5 + 0.5 * Math.sin((t - 30) * 6));
+    $("banner").style.opacity = bn;
+    $("banner").style.transform = `scale(${bn > 0 ? backOut(bn) : 0})`;
+    $("banner").style.boxShadow = `0 0 ${glow}px rgba(255,210,63,.9), 0 0 0 6px rgba(255,210,63,.6)`;
+  }
+
+  // ---- captions ----
+  const cue = CUES.find((c) => t >= c.a && t < c.b);
+  $("capText").innerHTML = cue ? cue.html : "";
+  $("cap").style.opacity = cue ? 1 : 0;
+
+  // ---- chrome ----
+  $("progress").style.width = (t / TOTAL * 1080) + "px";
+  $("disclaimer").style.opacity = t >= 4 && t < 27 ? 1 : 0;
+}
+
+window.render = render;
+render(0);
+</script>
+</body>
+</html>
