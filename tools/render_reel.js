@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // Render an HTML composition (exposing window.render(t)) to a silent MP4, frame by frame.
+// Set HIDE_CAPTIONS=1 to render without burned-in captions.
 // Usage: node tools/render_reel.js <composition.html> <out.mp4> [seconds=32] [fps=30]
 //        node tools/render_reel.js <composition.html> --stills <dir> 1.5 6 15 ...
 const { chromium } = require("playwright");
@@ -13,6 +14,7 @@ const fs = require("fs");
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
   await page.goto("file://" + path.resolve(html));
   await page.evaluate(() => document.fonts.ready);
+  if (process.env.HIDE_CAPTIONS === "1") await page.addStyleTag({ content: "#cap{display:none!important}" });
 
   if (out === "--stills") {
     const [dir, ...times] = rest;

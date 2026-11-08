@@ -56,18 +56,28 @@ python3 tools/guide_track.py reels/hyderabad-university-casteism/spec.json \
 ElevenLabs flow with the finished scene 5 takes (voice: Maahir – Crime News Narrator):
 https://elevenlabs.io/app/flows/abUpYmfJEdzC3uIpBKzX
 
-## Video (rendered locally, no paid tools)
+## Video (rendered locally, no paid tools) — no voiceover
 
-`output/uoh_reel_v1_guide-voice.mp4` is the finished 1080×1920, 30fps, 32s reel: motion graphics, burned-in Hindi captions, a generated dark-ambient bed (85 BPM pulse, ducked under the voice) and SFX on the spec's cues, loudness-normalised to -14 LUFS. **The voice is the robotic guide track.** To swap in a real voice, replace `audio/guide_track.mp3` and rebuild:
+Record your own voice over these. Both are 1080×1920, 30fps, 32s, with music and SFX only. The music is left about 10 dB quieter than a finished mix so your voice sits on top.
+
+| File | Use |
+|---|---|
+| `output/uoh_reel_no-voice_captions.mp4` | Hindi captions burned in. Read along with them so your timing matches. |
+| `output/uoh_reel_no-voice_clean.mp4` | No captions. Add your own in CapCut/Premiere after recording. |
+| `output/music_sfx_bed.m4a` | The audio bed on its own, if you want to mix it yourself. |
+
+Line timings to hit while recording: 0–4s, 4–12s, 12–19s, 19–27s, 27–32s (the lines are in `captions.hi.srt`).
+
+Rebuild:
 
 ```bash
 SLUG=reels/hyderabad-university-casteism
-node tools/render_reel.js $SLUG/video/composition.html /tmp/silent.mp4 32 30
-tools/sound_design.sh $SLUG/audio/guide_track.mp3 /tmp/mix.m4a     # or your new VO
-ffmpeg -y -i /tmp/silent.mp4 -i /tmp/mix.m4a -map 0:v -map 1:a -c:v copy \
-  -af loudnorm=I=-14:TP=-1.5:LRA=11 -c:a aac -b:a 192k -movflags +faststart -shortest \
-  $SLUG/output/uoh_reel_v1_guide-voice.mp4
+node tools/render_reel.js $SLUG/video/composition.html /tmp/silent.mp4 32 30                    # with captions
+HIDE_CAPTIONS=1 node tools/render_reel.js $SLUG/video/composition.html /tmp/silent_nocap.mp4 32 30
+tools/sound_design.sh none /tmp/bed.m4a                                                         # music + SFX only
+ffmpeg -y -i /tmp/silent.mp4 -i /tmp/bed.m4a -map 0:v -map 1:a -c:v copy -c:a aac -b:a 192k \
+  -movflags +faststart -shortest $SLUG/output/uoh_reel_no-voice_captions.mp4
 ```
 
+To mix your recorded voice in with ducking and -14 LUFS loudness, pass it instead of `none`: `tools/sound_design.sh my_voice.mp3 /tmp/mix.m4a`.
 Preview any moment as a still: `node tools/render_reel.js $SLUG/video/composition.html --stills /tmp/stills 1.5 16 25.8`.
-If a new voiceover's lines run at different lengths, update `SCENES[].spoken` in `composition.html` so the captions stay in sync.

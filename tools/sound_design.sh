@@ -4,8 +4,10 @@
 # Cue times match reels/hyderabad-university-casteism/spec.json.
 set -euo pipefail
 VO="$1"; OUT="$2"; D=32
+# Pass "none" as the voiceover to get a music + SFX bed only (for recording your own voice over it).
+if [ "$VO" = "none" ]; then VO_IN=(-f lavfi -i "anullsrc=r=44100:cl=mono:d=$D"); else VO_IN=(-i "$VO"); fi
 
-ffmpeg -y -loglevel error -i "$VO" \
+ffmpeg -y -loglevel error "${VO_IN[@]}" \
   -f lavfi -i "aevalsrc='0.35*sin(2*PI*55*t)+0.25*sin(2*PI*82.41*t)+0.12*sin(2*PI*110.3*t)':s=44100:d=$D" \
   -f lavfi -i "anoisesrc=color=brown:amplitude=0.6:d=$D:r=44100" \
   -f lavfi -i "aevalsrc='0.9*sin(2*PI*52*mod(t,0.70588))*exp(-14*mod(t,0.70588))':s=44100:d=$D" \
