@@ -43,3 +43,15 @@ python3 tools/validate_reel.py reels/hyderabad-university-casteism/spec.json \
 - **X/Twitter thread:** One post per scene, with the source link in post 2.
 - **YouTube Shorts:** Same cut. Title idea: `"Dalit Untouchable Idiot" — प्रोफेसर पर आरोप | Hyderabad University`.
 - **Community post / poll:** "सिर्फ माफी या निष्पक्ष जांच?" with two options. It feeds comments back into the reel.
+
+## Guide voiceover (timing only — not for publishing)
+
+`audio/guide_track.mp3` is a robotic offline espeak-ng read, exactly 32s, with each line starting on its scene's start time. Drop it on the timeline to cut b-roll, then replace it with a human or ElevenLabs read.
+
+```bash
+python3 tools/guide_track.py reels/hyderabad-university-casteism/spec.json \
+  reels/hyderabad-university-casteism/audio/guide_track.mp3
+```
+
+ElevenLabs flow with the finished scene 5 takes (voice: Maahir – Crime News Narrator):
+https://elevenlabs.io/app/flows/abUpYmfJEdzC3uIpBKzX
