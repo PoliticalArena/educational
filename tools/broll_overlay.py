@@ -269,6 +269,16 @@ def main():
                              f"enable='between(t,{s:.3f},{e:.3f})'[v{n}]")
                 last = f"[v{n}]"
             continue
+        if o.get("tag"):
+            png = os.path.join(tmp, f"credit{i}.png")
+            make_tag(o["tag"], png, size=o.get("size", 34))
+            inputs += ["-loop", "1", "-t", f"{dur:.3f}", "-i", png]
+            chain.append(f"[{n}:v]format=rgba,fade=t=in:st=0:d=0.2:alpha=1,"
+                         f"setpts=PTS-STARTPTS+{s:.3f}/TB[c{n}]")
+            chain.append(f"{last}[c{n}]overlay=x=(W-w)/2:y={o.get('top', 200)}:eof_action=pass:"
+                         f"enable='between(t,{s:.3f},{e:.3f})'[v{n}]")
+            last = f"[v{n}]"
+            continue
         png = os.path.join(tmp, f"card{i}.png")
         if o.get("banner"):
             make_banner(o["banner"], png)

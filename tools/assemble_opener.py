@@ -14,7 +14,8 @@ assemble.json:
     "crop": [w, h, x, y],                 # region of the screen recording to keep
     "keep": [[1.65, 3.15], ...],          # opener-time segments to keep (pauses removed)
     "top": 100,                           # y of the clip on the 1080x1920 canvas
-    "captions": [[1.76, 3.06, "text"], ...]  # opener-time captions (e.g. a translation)
+    "captions": [[1.76, 3.06, "text"], ...], # optional opener-time captions (e.g. a translation)
+    "credit": "Credit: ABP News"         # optional credit pill shown for the whole opener
   },
   "spec_in":  {"overlays": "overlays.master.json", "captions": "captions.master.tsv"},
   "spec_out": {"overlays": "overlays.json", "captions": "captions.tsv"}
@@ -124,6 +125,9 @@ def main():
     for o in cfg.get("extra_overlays", []):  # given on the master timeline
         o = dict(o, start=round(remap(o["start"]), 3), end=round(remap(o["end"]), 3))
         new_ov.append(o)
+    if op.get("credit"):
+        new_ov.append({"tag": op["credit"], "start": 0.0, "end": round(L, 3),
+                       "top": op.get("credit_top", 200), "cue": "opener credit"})
     new_ov.sort(key=lambda o: o["start"])
     spec["overlays"] = new_ov
     spec["trim_start"] = 0.0

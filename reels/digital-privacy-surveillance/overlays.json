@@ -5,6 +5,13 @@
  "card_max_height": 500,
  "overlays": [
   {
+   "tag": "Credit: ABP News",
+   "start": 0.0,
+   "end": 12.033,
+   "top": 262,
+   "cue": "opener credit"
+  },
+  {
    "banner": [
     "क्या आपका फ़ोन सुरक्षित है?",
     "Israeli tool + सरकार की मंजूरी"

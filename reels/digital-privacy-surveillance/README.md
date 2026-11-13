@@ -59,7 +59,7 @@ Captions need the Noto Sans Devanagari font (`apt-get install fonts-noto-core`).
 
 ## Cold open + assembly (v3)
 
-The video now opens on 12s of the ABP News clip of Rahul Gandhi's phone-tapping allegation (`broll/abp_rahul_phone_tapping.mp4`). His pauses are tightened, the phone UI is cropped out, and Hindi translation captions run over it ("…जो मुझे पता है और मेरे phone में है"). It leads straight into "क्या आपका phone सुरक्षित है?".
+The video now opens on 12s of the ABP News clip of Rahul Gandhi's phone-tapping allegation (`broll/abp_rahul_phone_tapping.mp4`). His pauses are tightened and the clip is cropped to the clean footage: the YouTube UI, subscribe button and headline strip are removed, and ABP's own watermark stays. There are no captions on it, and a "Credit: ABP News" tag runs for its full length. It leads straight into "क्या आपका phone सुरक्षित है?".
 
 To stay under 3:00, one repetitive line was cut (master 36.78–46.44s: "जिसके तहत … source के द्वारा"). The sentence still reads "ऐसा कौन सा software है … निकाली जा रही है".
 
