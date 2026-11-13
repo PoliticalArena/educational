@@ -64,3 +64,50 @@ A या B लिखकर बताइए!
 - Paste the news article URL into Sources.
 - If you use title #2, link a source for the "5–7 second unlock" claim, or soften it.
 - Chapter times match `privacy_talk_final_captions_broll.mp4` (2:58, with the ABP opener). Re-check them if you re-cut.
+
+---
+
+# Instagram Reel kit
+
+Reels can run up to 3:00, so this 2:58 cut uploads as-is. The first 125 characters of the caption show before "…more", so that's where the hook goes.
+
+## Caption (recommended)
+
+```
+आपका phone 5 सेकंड में खुल सकता है… और आपको पता भी नहीं चलेगा 📱🔓
+
+Israeli कंपनी Cellebrite के phone-hacking tools खरीदने के लिए NIA को विशेष छूट मिली — Internet Freedom Foundation (IFF) का दावा।
+ये tools seized phone से data निकालकर Instagram, X जैसी 100+ cloud services तक पहुंच सकते हैं।
+
+राहुल गांधी ने phone tapping का आरोप लगाया।
+ध्रुव राठी ने कहा, हिरासत में उनका phone clone करने की कोशिश हुई।
+
+सवाल सीधा है 👇
+राष्ट्रीय सुरक्षा ज़रूरी है… या आपकी निजता (Right to Privacy)?
+
+कमेंट में लिखें:
+🅰️ सुरक्षा  🅱️ निजता
+
+📌 Save करें, उस दोस्त को भेजें जो कहता है "मेरा phone तो safe है" 😅
+🔔 Follow करें ऐसी और ख़बरों के लिए
+
+📹 Opening clip: ABP News
+⚠️ यह वीडियो सार्वजनिक रिपोर्ट्स और दावों पर आधारित है।
+
+#Cellebrite #PhoneHacking #DigitalPrivacy #RahulGandhi #DhruvRathee
+```
+
+## Alternative first lines (A/B test)
+- `क्या सरकार आपका WhatsApp पढ़ सकती है? 👀 पूरा सच देखिए…`
+- `iPhone भी safe नहीं? 😳 Israeli tool जो 5 सेकंड में phone खोल देता है`
+- `ध्रुव राठी का phone clone करने की कोशिश? 🤯 ये tool कौन सा है?`
+
+## Cover text (Reel thumbnail, 3–5 words)
+`आपका phone खतरे में? 🔓`
+
+## On-post settings
+- **Hashtags:** use 3–5 targeted tags. Instagram now caps a post at 5, and long tag lists can hurt reach. Optional swaps: #Surveillance #RightToPrivacy #IFF #DPDPAct.
+- **Pin a comment** right after posting: `A या B? 👇 राष्ट्रीय सुरक्षा या निजता`. Reply to the first 20–30 comments in the first hour.
+- **Collab invite:** tagging a privacy or news page as a collaborator doubles the reel's first audience.
+- **Trial reel:** if the account has it, post a trial with a different first line to non-followers first.
+- **Story:** reshare with a poll sticker: "आपका phone safe है? हाँ / नहीं".
