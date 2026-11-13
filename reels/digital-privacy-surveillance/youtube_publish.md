@@ -1,4 +1,4 @@
-# YouTube publish kit: Privacy / Cellebrite (2:56)
+# YouTube publish kit: Privacy / Cellebrite (2:58)
 
 ## Title (pick one)
 
@@ -20,15 +20,16 @@ Internet Freedom Foundation (IFF) के मुताबिक गृह मं�
 सवाल ये है: राष्ट्रीय सुरक्षा के नाम पर क्या हमारी निजता (Right to Privacy) से समझौता हो रहा है?
 
 ⏱️ Chapters
-0:00 क्या आपका phone सुरक्षित है?
-0:15 राहुल गांधी का phone tapping आरोप
-0:47 Israeli software Cellebrite क्या है?
-1:03 Encrypted phone कैसे unlock होता है
-1:19 IFF का खुलासा: गृह मंत्री की मंजूरी
-1:29 ध्रुव राठी का phone cloning दावा
-1:44 बिना निगरानी के tools का इस्तेमाल?
-2:04 DPDP Act 2023 और Puttaswamy केस
-2:35 आपकी राय क्या है?
+0:00 राहुल गांधी: "जो मेरे phone में है"
+0:12 क्या आपका phone सुरक्षित है?
+0:27 राहुल गांधी का phone tapping आरोप
+0:49 Israeli software Cellebrite क्या है?
+1:05 Encrypted phone कैसे unlock होता है
+1:21 IFF का खुलासा: गृह मंत्री की मंजूरी
+1:31 ध्रुव राठी का phone cloning दावा
+1:46 बिना निगरानी के tools का इस्तेमाल?
+2:06 DPDP Act 2023 और Puttaswamy केस
+2:37 आपकी राय क्या है?
 
 📌 Sources
 • Internet Freedom Foundation (IFF): internetfreedom.in
@@ -62,4 +63,4 @@ A या B लिखकर बताइए!
 ## Before publishing
 - Paste the news article URL into Sources.
 - If you use title #2, link a source for the "5–7 second unlock" claim, or soften it.
-- Chapter times match `privacy_talk_final_captions_broll.mp4` (2:56). Re-check them if you re-cut.
+- Chapter times match `privacy_talk_final_captions_broll.mp4` (2:58, with the ABP opener). Re-check them if you re-cut.

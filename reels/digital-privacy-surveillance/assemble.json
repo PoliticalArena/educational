@@ -1,0 +1,123 @@
+{
+ "master": "/tmp/claude-0/-home-user-educational/c319ee09-9b0f-5fef-9226-6aec37696da3/scratchpad/out.mp4",
+ "master_trim_start": 2.2,
+ "remove": [
+  [
+   36.78,
+   46.44
+  ]
+ ],
+ "opener": {
+  "clip": "broll/abp_rahul_phone_tapping.mp4",
+  "crop": [
+   1206,
+   1920,
+   0,
+   350
+  ],
+  "keep": [
+   [
+    1.65,
+    3.15
+   ],
+   [
+    3.65,
+    4.6
+   ],
+   [
+    6.4,
+    7.5
+   ],
+   [
+    8.15,
+    10.1
+   ],
+   [
+    10.55,
+    11.7
+   ],
+   [
+    12.22,
+    14.15
+   ],
+   [
+    14.45,
+    16.1
+   ],
+   [
+    16.68,
+    18.55
+   ]
+  ],
+  "top": 100,
+  "captions": [
+   [
+    1.76,
+    3.06,
+    "जिस दिन वो debate में आएंगे,"
+   ],
+   [
+    3.74,
+    4.5,
+    "one-on-one debate,"
+   ],
+   [
+    6.5,
+    7.4,
+    "सबको पता चल जाएगा"
+   ],
+   [
+    8.24,
+    10.02,
+    "कौन विदेशी ताकतों के कंट्रोल में है,"
+   ],
+   [
+    10.62,
+    11.62,
+    "कौन anti-national है,"
+   ],
+   [
+    12.3,
+    14.08,
+    "कब से anti-national है,"
+   ],
+   [
+    14.52,
+    16.02,
+    "और बहुत सारी जानकारी"
+   ],
+   [
+    16.76,
+    18.42,
+    "जो मुझे पता है और मेरे phone में है"
+   ]
+  ]
+ },
+ "extra_overlays": [
+  {
+   "video": "broll/dpdp_rti_news.mp4",
+   "crop": [
+    2144,
+    1100,
+    240,
+    0
+   ],
+   "width": 1040,
+   "top": 300,
+   "start": 126.12,
+   "end": 145.7,
+   "label": "DPDP Act और RTI पर रिपोर्ट",
+   "cue": "DPDP Act ... Puttaswamy case",
+   "pip": true,
+   "clip_start": 0.3
+  }
+ ],
+ "spec_in": {
+  "overlays": "overlays.master.json",
+  "captions": "captions.master.tsv"
+ },
+ "spec_out": {
+  "overlays": "overlays.json",
+  "captions": "captions.tsv"
+ }
+}

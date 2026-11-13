@@ -227,6 +227,27 @@ def main():
                        "-i", os.path.join(a.reel_dir, o["video"])]
             fg_w = o.get("width", 960)
             fg_y = o.get("top", 210)
+            if o.get("pip"):
+                # Video card at the top of the frame; the speaker stays visible below.
+                fg_y = o.get("top", spec["card_top"])
+                chain.append(
+                    f"[{n}:v]fps=30,crop={cw_}:{ch_}:{cx}:{cy},scale={fg_w - 16}:-2,"
+                    f"pad=iw+16:ih+16:8:8:white,format=yuv420p,"
+                    f"fade=t=in:st=0:d=0.18,fade=t=out:st={dur - 0.18:.3f}:d=0.18,"
+                    f"setpts=PTS-STARTPTS+{s:.3f}/TB[c{n}]")
+                chain.append(f"{last}[c{n}]overlay=x=(W-w)/2:y={fg_y}:eof_action=pass:"
+                             f"enable='between(t,{s:.3f},{e:.3f})'[v{n}]")
+                last = f"[v{n}]"
+                if o.get("label"):
+                    n += 1
+                    png = os.path.join(tmp, f"tag{i}.png")
+                    make_tag(o["label"], png)
+                    inputs += ["-loop", "1", "-t", f"{dur:.3f}", "-i", png]
+                    chain.append(f"[{n}:v]format=rgba,setpts=PTS-STARTPTS+{s:.3f}/TB[c{n}]")
+                    chain.append(f"{last}[c{n}]overlay=x=(W-w)/2:y={fg_y - 64}:eof_action=pass:"
+                                 f"enable='between(t,{s:.3f},{e:.3f})'[v{n}]")
+                    last = f"[v{n}]"
+                continue
             chain.append(
                 f"[{n}:v]fps=30,crop={cw_}:{ch_}:{cx}:{cy},split[bg{n}][fg{n}];"
                 f"[bg{n}]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,"
