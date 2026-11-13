@@ -45,10 +45,9 @@ Other options: `--zoom` (punch-in amount), `--face-y` (zoom centre), `--noise` (
 | 92–99s | ध्रुव राठी ने दावा किया | Rathee photo (Getty credit) |
 | 99–106s | phone cloning, दिल्ली पुलिस | "How did they get inside my phone?" |
 | 158–173s | Closing question | Banner: "राष्ट्रीय सुरक्षा या निजता?" / "अपनी राय कमेंट में बताएं" |
-| 173–178s | Subscribe | Banner: "@Gamchha.patrakar" / "Subscribe करें · Share करें" |
-| Whole video | — | "गमछा पत्रकार" brand tag, top left |
+| 173–178s | Subscribe | Banner: "Subscribe this channel" |
 
-The hook, closing question and branding follow the channel critique: a 0–2s Devanagari text hook, a polarising closing question, and a visible creator identity.
+The hook and closing question follow the channel critique: a 0–2s Devanagari text hook and a polarising closing question. There is no channel branding; the end banner is a generic subscribe prompt.
 
 Rebuild (after `tighten_cut.py`):
 

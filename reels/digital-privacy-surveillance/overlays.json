@@ -3,8 +3,6 @@
   "card_top": 230,
   "card_width": 1000,
   "card_max_height": 500,
-  "watermark": "गमछा पत्रकार",
-  "watermark_top": 150,
   "overlays": [
     {"banner": ["क्या आपका फ़ोन सुरक्षित है?", "Israeli tool + सरकार की मंजूरी"], "start": 2.4, "end": 8.5, "cue": "hook: क्या आपका phone ... सुरक्षित है?"},
     {"video": "broll/rahul_gandhi_phone_video.mp4", "crop": [620, 760, 6, 592], "clip_start": 2.0, "start": 17.0, "end": 23.8, "label": "राहुल गांधी का वीडियो", "cue": "राहुल गांधी ने video जारी किया ... tape"},
@@ -20,6 +18,6 @@
     {"image": "broll/dhruv_rathee_article.jpg", "crop": [40, 100, 2050, 1050],  "start": 92.4, "end": 98.9, "cue": "ध्रुव राठी ने दावा किया", "label": "Dhruv Rathee · Ritesh Shukla/Getty Images"},
     {"image": "broll/dhruv_rathee_article.jpg", "crop": [30, 1557, 2106, 330],  "start": 98.9, "end": 106.5, "cue": "phone seize ... cloning ... दिल्ली पुलिस"},
     {"banner": ["राष्ट्रीय सुरक्षा या निजता?", "अपनी राय कमेंट में बताएं"], "start": 157.9, "end": 173.2, "cue": "closing question: नागरिकों की निजता ... comment में जरूर बताएं"},
-    {"banner": ["@Gamchha.patrakar", "Subscribe करें · Share करें"], "start": 173.3, "end": 177.6, "cue": "subscribe CTA"}
+    {"banner": ["Subscribe this channel"], "start": 173.3, "end": 177.6, "cue": "subscribe CTA"}
   ]
 }
