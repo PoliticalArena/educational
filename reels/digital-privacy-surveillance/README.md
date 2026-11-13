@@ -30,16 +30,25 @@ Other options: `--zoom` (punch-in amount), `--face-y` (zoom centre), `--noise` (
 - `captions.tsv` holds Hindi caption chunks timed from an ElevenLabs Scribe transcript of `audio/voice_cut.mp3`. The filler "जो है" is dropped, along with a few small grammar fixes.
 - `overlays.json` lists each screenshot card, its crop and the spoken cue it lands on. The images are in `broll/`. One card is a quote card made from the article's third paragraph, because the screenshot text was too small to read on a phone.
 
-| Cut time | Line | Card |
+| Cut time | Line | On screen |
 |---|---|---|
+| 2.4–8.5s | Hook | Banner: "क्या आपका फ़ोन सुरक्षित है?" / "Israeli tool + सरकार की मंजूरी" |
+| 17.0–23.8s | राहुल गांधी ने video जारी किया | **Full-screen cutaway** to his phone-tapping video (`broll/rahul_gandhi_phone_video.mp4`) |
 | 49–58s | Israeli software | Cellebrite headline |
-| 58–65s | विशेष मंजूरी | "India bypasses own rules" |
+| 58–61s | Israel से भारत सरकार | "India bypasses own rules" |
+| 61–65s | विशेष मंजूरी | Quote: para 1, "exempted Cellebrite from procurement rules" |
 | 65–73s | unlock in 5–7s | Police-with-phone photo |
-| 73–82s | data निकाली जा सकती है | Quote: 100+ cloud services |
+| 73–82s | data निकाली जा सकती है | Quote: para 3, 100+ cloud services |
 | 82–86s | Internet Freedom Foundation | IFF tweet, then the "Home Minister signed off" graphic |
-| 86–91s | गृह मंत्री ने NIA को छूट | Home Minister frame |
-| 91–99s | ध्रुव राठी ने दावा किया | Rathee photo (Getty credit) |
+| 86–88s | गृह मंत्री ने | Home Minister frame |
+| 88–92s | NIA को छूट | Quote: para 2, waiver for 422 foreign forensic products |
+| 92–99s | ध्रुव राठी ने दावा किया | Rathee photo (Getty credit) |
 | 99–106s | phone cloning, दिल्ली पुलिस | "How did they get inside my phone?" |
+| 158–173s | Closing question | Banner: "राष्ट्रीय सुरक्षा या निजता?" / "अपनी राय कमेंट में बताएं" |
+| 173–178s | Subscribe | Banner: "@Gamchha.patrakar" / "Subscribe करें · Share करें" |
+| Whole video | — | "गमछा पत्रकार" brand tag, top left |
+
+The hook, closing question and branding follow the channel critique: a 0–2s Devanagari text hook, a polarising closing question, and a visible creator identity.
 
 Rebuild (after `tighten_cut.py`):
 
@@ -51,7 +60,7 @@ Captions need the Noto Sans Devanagari font (`apt-get install fonts-noto-core`).
 
 ## Before publishing
 
-- Rahul Gandhi's video (around 15s) and the Puttaswamy / DPDP Act lines (around 128–145s) have no visuals. Add a clip or a headline there if you have one.
+- The Puttaswamy / DPDP Act lines (around 128–145s) still have no visuals. Add a headline there if you have one.
 - `broll/home_minister_frame.jpg` has another reel's text burned in. It is cropped out, but check that you have the rights to the frame.
 - The Getty photo of Dhruv Rathee is used for news commentary and credited on the card.
 

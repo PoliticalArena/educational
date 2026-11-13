@@ -3,15 +3,23 @@
   "card_top": 230,
   "card_width": 1000,
   "card_max_height": 500,
+  "watermark": "गमछा पत्रकार",
+  "watermark_top": 150,
   "overlays": [
+    {"banner": ["क्या आपका फ़ोन सुरक्षित है?", "Israeli tool + सरकार की मंजूरी"], "start": 2.4, "end": 8.5, "cue": "hook: क्या आपका phone ... सुरक्षित है?"},
+    {"video": "broll/rahul_gandhi_phone_video.mp4", "crop": [620, 760, 6, 592], "clip_start": 2.0, "start": 17.0, "end": 23.8, "label": "राहुल गांधी का वीडियो", "cue": "राहुल गांधी ने video जारी किया ... tape"},
     {"image": "broll/cellebrite_headline.jpg",  "crop": [0, 0, 2136, 1100],     "start": 49.4, "end": 57.6, "cue": "Israeli software ... चर्चा का विषय"},
-    {"image": "broll/bypass_rules_headline.jpg", "crop": null,                 "start": 57.7, "end": 65.2, "cue": "विशेष मंजूरी के तहत खरीदा गया"},
+    {"image": "broll/bypass_rules_headline.jpg", "crop": null,                 "start": 57.7, "end": 61.0, "cue": "Israel से भारत सरकार द्वारा"},
+    {"text": "“India has exempted Israeli surveillance company Cellebrite from domestic procurement rules...”", "image_ref": "broll/article_paragraphs.jpg", "start": 61.0, "end": 65.2, "cue": "विशेष मंजूरी के तहत खरीदा गया", "label": "From the news report (para 1)"},
     {"image": "broll/police_phone_photo.jpg",   "crop": [43, 200, 2055, 1000],  "start": 65.3, "end": 73.0, "cue": "encrypted phone ... unlock"},
     {"text": "“...can extract data from seized devices and use recovered login tokens to access more than 100 cloud services, including Instagram, X and Tinder.”", "image_ref": "broll/article_body.jpg", "start": 73.0, "end": 81.6, "cue": "जानकारियां निकाली जा सकती हैं", "label": "From the news report (para 3)"},
     {"image": "broll/iff_tweet.jpg",            "crop": [20, 0, 1515, 680],     "start": 81.7, "end": 84.2, "cue": "Internet Freedom Foundation", "label": "@internetfreedom on X"},
     {"image": "broll/iff_tweet.jpg",            "crop": [70, 700, 1417, 740],   "start": 84.2, "end": 86.3, "cue": "ने बताया", "label": "Internet Freedom Foundation"},
-    {"image": "broll/home_minister_frame.jpg",  "crop": [0, 470, 1080, 560],    "start": 86.3, "end": 91.3, "cue": "गृह मंत्री ने NIA को छूट दी"},
-    {"image": "broll/dhruv_rathee_article.jpg", "crop": [40, 100, 2050, 1050],  "start": 91.3, "end": 98.9, "cue": "ध्रुव राठी ने दावा किया", "label": "Dhruv Rathee · Ritesh Shukla/Getty Images"},
-    {"image": "broll/dhruv_rathee_article.jpg", "crop": [30, 1557, 2106, 330],  "start": 98.9, "end": 106.5, "cue": "phone seize ... cloning ... दिल्ली पुलिस"}
+    {"image": "broll/home_minister_frame.jpg",  "crop": [0, 470, 1080, 560],    "start": 86.3, "end": 88.3, "cue": "गृह मंत्री ने"},
+    {"text": "“Home Minister Amit Shah approved a waiver for the NIA, clearing the way for the purchase of at least 422 foreign forensic products, including Cellebrite tools.”", "image_ref": "broll/article_paragraphs.jpg", "start": 88.3, "end": 92.4, "cue": "NIA को खरीदने के लिए विशेष छूट दी", "label": "From the news report (para 2)"},
+    {"image": "broll/dhruv_rathee_article.jpg", "crop": [40, 100, 2050, 1050],  "start": 92.4, "end": 98.9, "cue": "ध्रुव राठी ने दावा किया", "label": "Dhruv Rathee · Ritesh Shukla/Getty Images"},
+    {"image": "broll/dhruv_rathee_article.jpg", "crop": [30, 1557, 2106, 330],  "start": 98.9, "end": 106.5, "cue": "phone seize ... cloning ... दिल्ली पुलिस"},
+    {"banner": ["राष्ट्रीय सुरक्षा या निजता?", "अपनी राय कमेंट में बताएं"], "start": 157.9, "end": 173.2, "cue": "closing question: नागरिकों की निजता ... comment में जरूर बताएं"},
+    {"banner": ["@Gamchha.patrakar", "Subscribe करें · Share करें"], "start": 173.3, "end": 177.6, "cue": "subscribe CTA"}
   ]
 }

@@ -85,6 +85,85 @@ def make_card(src, crop, width, max_h, label, out, text=None):
     return canvas.size
 
 
+FONT_LATIN_BOLD = "/usr/share/fonts/truetype/noto/NotoSans-Bold.ttf"
+
+
+def _runs(text):
+    """Split text into (is_devanagari, chunk) runs so each gets a font that has its glyphs."""
+    runs = []
+    for ch in text:
+        dev = "\u0900" <= ch <= "\u097F" or ch in "\u200c\u200d"
+        if ch == " " and runs:
+            dev = runs[-1][0]
+        if runs and runs[-1][0] == dev:
+            runs[-1][1] += ch
+        else:
+            runs.append([dev, ch])
+    return runs
+
+
+def _fonts(size):
+    return {True: ImageFont.truetype(FONT_BOLD, size), False: ImageFont.truetype(FONT_LATIN_BOLD, size)}
+
+
+def _metrics(size):
+    fonts = _fonts(size)
+    asc = max(f.getmetrics()[0] for f in fonts.values())
+    desc = max(f.getmetrics()[1] for f in fonts.values())
+    return fonts, int(asc * 0.86), int(desc * 0.55)  # trim the fonts' generous line padding
+
+
+def mixed_bbox(text, size):
+    fonts, asc, desc = _metrics(size)
+    d = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+    w = sum(d.textlength(c, font=fonts[dev]) for dev, c in _runs(text))
+    return 0, 0, int(w), asc + desc
+
+
+def draw_mixed(draw, xy, text, size, fill, **kw):
+    """Draw mixed Devanagari/Latin text on one shared baseline; xy is the top-left of mixed_bbox."""
+    fonts, asc, _ = _metrics(size)
+    x, y = xy
+    for dev, chunk in _runs(text):
+        draw.text((x, y + asc), chunk, font=fonts[dev], fill=fill, anchor="ls", **kw)
+        x += draw.textlength(chunk, font=fonts[dev])
+
+def make_tag(text, out, size=34, alpha=235):
+    """Small dark pill with white text (source tags, channel watermark)."""
+    l, tp, r, b = mixed_bbox(text, size)
+    w, h = r - l + 44, b - tp + 26
+    im = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    dd = ImageDraw.Draw(im)
+    dd.rounded_rectangle((0, 0, w - 1, h - 1), radius=h // 2, fill=(15, 15, 15, alpha))
+    draw_mixed(dd, (22 - l, 13 - tp), text, size, (255, 255, 255, 255))
+    im.save(out)
+
+
+def make_banner(lines, out, width=1000):
+    """Hook/CTA banner in the channel style: red box with yellow headline, black box below."""
+    styles = [((200, 25, 25), (255, 214, 10), 84), ((12, 12, 12), (255, 255, 255), 58)]
+    blocks = []
+    for i, text in enumerate(lines):
+        bg, fg, size = styles[min(i, 1)]
+        l, tp, r, b = mixed_bbox(text, size)
+        bw, bh = min(width, r - l + 70), b - tp + 44
+        blk = Image.new("RGBA", (bw, bh), (0, 0, 0, 0))
+        dd = ImageDraw.Draw(blk)
+        dd.rounded_rectangle((0, 0, bw - 1, bh - 1), radius=22, fill=bg + (255,),
+                            outline=(255, 255, 255, 255) if i == 0 else (255, 196, 0, 255), width=5)
+        draw_mixed(dd, ((bw - (r - l)) // 2 - l, 22 - tp), text, size, fg + (255,),
+                   stroke_width=2 if i == 0 else 0, stroke_fill=(60, 0, 0, 255))
+        blocks.append(blk)
+    gap = 18
+    H = sum(b.height for b in blocks) + gap * (len(blocks) - 1) + 2 * PAD
+    canvas = Image.new("RGBA", (width + 2 * PAD, H), (0, 0, 0, 0))
+    y = PAD
+    for b in blocks:
+        canvas.alpha_composite(b, ((canvas.width - b.width) // 2, y))
+        y += b.height + gap
+    canvas.save(out)
+
+
 def ass_time(t):
     t = max(0.0, t)
     h, rem = divmod(t, 3600)
@@ -136,23 +215,63 @@ def main():
 
     inputs = ["-ss", f"{shift}", "-i", a.master]
     chain, last = [], "[0:v]"
+    n = 0
     for i, o in enumerate(spec["overlays"]):
-        png = os.path.join(tmp, f"card{i}.png")
-        src = os.path.join(a.reel_dir, o["image"]) if o.get("image") else None
-        cw, ch = make_card(src, o.get("crop"), spec["card_width"], spec["card_max_height"],
-                           o.get("label"), png, text=o.get("text"))
         s, e = o["start"] - shift, o["end"] - shift
         dur = e - s
+        n += 1
+        if o.get("video"):
+            # Full-screen cutaway: the clip on a blurred, darkened copy of itself.
+            cw_, ch_, cx, cy = o["crop"]
+            inputs += ["-ss", f"{o.get('clip_start', 0)}", "-t", f"{dur:.3f}",
+                       "-i", os.path.join(a.reel_dir, o["video"])]
+            fg_w = o.get("width", 960)
+            fg_y = o.get("top", 210)
+            chain.append(
+                f"[{n}:v]fps=30,crop={cw_}:{ch_}:{cx}:{cy},split[bg{n}][fg{n}];"
+                f"[bg{n}]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,"
+                f"gblur=sigma=40,eq=brightness=-0.18[bgb{n}];"
+                f"[fg{n}]scale={fg_w}:-2[fgs{n}];"
+                f"[bgb{n}][fgs{n}]overlay=x=(W-w)/2:y={fg_y},format=yuv420p,"
+                f"fade=t=in:st=0:d=0.15,fade=t=out:st={dur - 0.15:.3f}:d=0.15,"
+                f"setpts=PTS-STARTPTS+{s:.3f}/TB[c{n}]")
+            chain.append(f"{last}[c{n}]overlay=0:0:eof_action=pass:"
+                         f"enable='between(t,{s:.3f},{e:.3f})'[v{n}]")
+            last = f"[v{n}]"
+            if o.get("label"):
+                n += 1
+                png = os.path.join(tmp, f"tag{i}.png")
+                make_tag(o["label"], png)
+                inputs += ["-loop", "1", "-t", f"{dur:.3f}", "-i", png]
+                chain.append(f"[{n}:v]format=rgba,setpts=PTS-STARTPTS+{s:.3f}/TB[c{n}]")
+                chain.append(f"{last}[c{n}]overlay=x=(W-w)/2:y={fg_y - 30}:eof_action=pass:"
+                             f"enable='between(t,{s:.3f},{e:.3f})'[v{n}]")
+                last = f"[v{n}]"
+            continue
+        png = os.path.join(tmp, f"card{i}.png")
+        if o.get("banner"):
+            make_banner(o["banner"], png)
+        else:
+            src = os.path.join(a.reel_dir, o["image"]) if o.get("image") else None
+            make_card(src, o.get("crop"), spec["card_width"], spec["card_max_height"],
+                      o.get("label"), png, text=o.get("text"))
         inputs += ["-loop", "1", "-t", f"{dur:.3f}", "-i", png]
-        n = i + 1
         chain.append(
             f"[{n}:v]format=rgba,fade=t=in:st=0:d=0.18:alpha=1,"
             f"fade=t=out:st={dur - 0.18:.3f}:d=0.18:alpha=1,setpts=PTS-STARTPTS+{s:.3f}/TB[c{n}]")
-        y0 = spec["card_top"] - PAD
+        y0 = o.get("top", spec["card_top"]) - PAD
         # Slide up 40px while fading in.
         chain.append(
             f"{last}[c{n}]overlay=x=(W-w)/2:y='{y0}+40*max(0\\,1-(t-{s:.3f})/0.25)':"
             f"eof_action=pass:enable='between(t,{s:.3f},{e:.3f})'[v{n}]")
+        last = f"[v{n}]"
+    if spec.get("watermark"):
+        n += 1
+        png = os.path.join(tmp, "watermark.png")
+        make_tag(spec["watermark"], png, size=30, alpha=200)
+        inputs += ["-loop", "1", "-i", png]
+        wm_y = spec.get("watermark_top", 160)
+        chain.append(f"{last}[{n}:v]overlay=x=40:y={wm_y}:shortest=1[v{n}]")
         last = f"[v{n}]"
     if not a.no_captions:
         ass = os.path.join(tmp, "captions.ass")
