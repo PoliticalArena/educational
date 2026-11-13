@@ -5,7 +5,7 @@ Source: `IMG_5770.MOV` (iPhone, 1080×1920, HLG/Dolby Vision HDR, **3:27**).
 | File | What it is |
 |---|---|
 | `output/privacy_talk_final_captions_broll.mp4` | **Publish this one.** 2:56: Hindi captions, screenshot b-roll cards, and the 2.2s of dead air at the start trimmed |
-| `output/privacy_talk_2m58s.mp4` | The clean cut, with no captions or cards. | Final cut. 1080×1920, 30fps, H.264 SDR (BT.709), AAC 192k, about -14 LUFS. **2:58** |
+| `output/privacy_talk_2m58s.mp4` | The clean cut, with no captions or cards. 1080×1920, 30fps, H.264 SDR (BT.709), AAC 192k, about -14 LUFS. **2:58** |
 | `output/cut_list.json` | Every kept segment (source in/out seconds, and whether it is zoomed in) |
 
 ## What was done
